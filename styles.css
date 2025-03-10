@@ -36,7 +36,7 @@ body {
 }
 
 #chat-header {
-    background: #ed3bb8;
+    background: #b8238b;
     color: white;
     padding: 15px;
     text-align: center;
@@ -107,7 +107,7 @@ body {
     padding: 12px 18px;
     border-radius: 25px;
     border: none;
-    background: #ed3bb8;
+    background: #b8238b;
     color: white;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
@@ -115,7 +115,7 @@ body {
 }
 
 .chat-button:hover {
-    background: #ed3bb8;
+    background: #b8238b;
 }
 
 /* "Go Back" button smaller style */
@@ -163,7 +163,7 @@ body {
     font-size: 16px;
     padding: 10px 20px;
     border-radius: 10px;
-    background: #ed3bb8;
+    background: #b8238b;
     color: white;
     border: none;
     cursor: pointer;
@@ -173,12 +173,12 @@ body {
 }
 
 #send-button:hover {
-    background: #ed3bb8;
+    background: #b8238b;
 }
 
 /* ===== Start Button ===== */
 #start-button {
-    background-color: #ed3bb8;
+    background-color: #b8238b;
     color: white;
     font-size: 18px;
     font-weight: bold;
@@ -192,7 +192,7 @@ body {
 }
 
 #start-button:hover {
-    background-color: #ed3bb8;
+    background-color: #b8238b;
     transform: scale(1.05);
 }
 
@@ -211,7 +211,7 @@ body {
     border-radius: 50%;
     border: 8px solid #ccc;
     /* Example 4-slice conic gradient */
-    background: conic-gradient(#ed3bb8 0deg 90deg, #fff 90deg 180deg, #ed3bb8 180deg 270deg, #fff 270deg 360deg);
+    background: conic-gradient(#b8238b 0deg 90deg, #fff 90deg 180deg, #b8238b 180deg 270deg, #fff 270deg 360deg);
     /* Spin it continuously for 2 seconds (we'll stop it after) */
     animation: spinAnimation 2s linear infinite;
     position: relative;
@@ -231,7 +231,7 @@ body {
 .reward-message {
     font-size: 20px;
     font-weight: bold;
-    color: #ed3bb8;
+    color: #b8238b;
     text-align: center;
     margin-bottom: 10px;
     padding: 5px 10px;
