@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Bengal Star - Leave a Review and Get Rewarded!</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="chat-container">
+    <!-- Logo Above the Chatbot (optional) -->
+    <img
+      src="bengel.jpg"
+      alt="Bengal Logo"
+      style="width:100%; border-radius:15px 15px 0 0;"
+    />
+
+    <div id="chat-header">
+      <span class="header-line">Thanks For Ordering!<br></span><br />
+      <span class="header-line">Leave A Review & Spin To Win A Free Reward Of Your Next Order</span>
+    </div>
+
+    <button id="start-button">Start</button>
+
+    <div id="chat-box"></div>
+
+    <div class="clearfix"></div>
+
+    <!-- Text box & Send button (revealed only for typed questions) -->
+    <input
+      type="text"
+      id="user-input"
+      placeholder="Type here..."
+      onkeypress="if(event.key === 'Enter') sendMessage()"
+    />
+    <button id="send-button" onclick="sendMessage()">Send</button>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

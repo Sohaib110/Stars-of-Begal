@@ -1,0 +1,74 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f4f4f4;
+}
+
+#chatbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 90%; /* Make the chat window wider */
+  max-width: 800px; /* Increase max width */
+  height: 80vh; /* Increase the height */
+  background-color: white;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  font-size: 18px; /* Increase font size for better readability */
+}
+
+#chatOutput {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  font-size: 20px; /* Increase font size for the chat messages */
+}
+
+#userResponse {
+  width: 100%;
+  padding: 15px; /* Larger padding for easier typing */
+  margin-top: 20px; /* Add more space around the input */
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 18px; /* Make input text larger */
+}
+
+#userInfoForm {
+  display: none;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 15px; /* Larger button size */
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px; /* Larger font size for buttons */
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.hidden {
+  display: none;
+}
+
+#acknowledgmentMessage {
+  display: none;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 20px; /* Larger acknowledgment message */
+}

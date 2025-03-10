@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Landing Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="chatbox">
+    <div id="chatOutput"></div>
+    <input type="text" id="userResponse" placeholder="Type your message here" />
+    <button onclick="handleResponse()">Send</button>
+    
+    <div id="userInfoForm" class="hidden">
+      <h3>Submit Your Details</h3>
+      <form id="detailsForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <input type="file" id="reviewScreenshot" accept="image/*" required />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div id="acknowledgmentMessage" class="hidden">
+      <p>Thank you for your review submission!</p>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+
+</body>
+</html>

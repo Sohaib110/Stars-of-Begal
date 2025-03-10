@@ -1,0 +1,246 @@
+/* styles.css */
+
+/* ===== Overall Page Layout ===== */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#chat-container {
+    width: 400px;
+    max-width: 90%;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#chat-header {
+    background: #ed3bb8;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    display: none;
+    /* Hidden until chat starts */
+}
+
+#chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #e4e6eb;
+    max-height: 400px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ===== Chat Messages ===== */
+.chat-message {
+    font-size: 18px;
+    padding: 15px 20px;
+    max-width: 80%;
+    margin-bottom: 5px;
+    animation: messageFade 0.3s ease-in-out;
+}
+
+@keyframes messageFade {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bot-message {
+    border-radius: 20px;
+    background: #fff;
+    color: #000;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.15);
+}
+
+.user-message {
+    border-radius: 20px;
+    background: #dcf8c6;
+    /* Light green for user bubble */
+    margin-left: auto;
+    /* Push to right side */
+}
+
+/* ===== Buttons ===== */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chat-button {
+    font-size: 16px;
+    padding: 12px 18px;
+    border-radius: 25px;
+    border: none;
+    background: #ed3bb8;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.chat-button:hover {
+    background: #ed3bb8;
+}
+
+/* "Go Back" button smaller style */
+#go-back-button {
+    background: #d3d3d3;
+    color: #333;
+    font-size: 14px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin-top: 10px;
+}
+
+/* ===== File Upload Style ===== */
+.upload-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.file-input {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+/* ===== Text Input & Send Button ===== */
+#user-input {
+    font-size: 16px;
+    padding: 12px;
+    width: 80%;
+    max-width: 350px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    display: none;
+    margin: 10px auto 0;
+    /* center */
+}
+
+#send-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #ed3bb8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: none;
+    margin: 10px auto;
+    /* center */
+}
+
+#send-button:hover {
+    background: #ed3bb8;
+}
+
+/* ===== Start Button ===== */
+#start-button {
+    background-color: #ed3bb8;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: transform 0.2s ease-in-out;
+}
+
+#start-button:hover {
+    background-color: #ed3bb8;
+    transform: scale(1.05);
+}
+
+/* ===== Spinning Wheel ===== */
+.wheel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.wheel {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 8px solid #ccc;
+    /* Example 4-slice conic gradient */
+    background: conic-gradient(#ed3bb8 0deg 90deg, #fff 90deg 180deg, #ed3bb8 180deg 270deg, #fff 270deg 360deg);
+    /* Spin it continuously for 2 seconds (we'll stop it after) */
+    animation: spinAnimation 2s linear infinite;
+    position: relative;
+}
+
+@keyframes spinAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== Reward & Voucher Messages ===== */
+.reward-message {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ed3bb8;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+}
+
+.voucher-message {
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+    margin-top: 10px;
+    max-width: 80%;
+}

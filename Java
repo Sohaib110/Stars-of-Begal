@@ -1,0 +1,186 @@
+let chatOutput = document.getElementById('chatOutput');
+let userResponse = document.getElementById('userResponse');
+let userInfoForm = document.getElementById('userInfoForm');   // Used for screenshot upload
+let acknowledgmentMessage = document.getElementById('acknowledgmentMessage');
+let step = 0;
+
+// For storing user details
+let userName = "";
+let userEmail = "";
+let screenshotFile = null;
+
+// 1) Immediately ask for Name
+function startChat() {
+  displayMessage("Please enter your Full Name:");
+}
+
+// Display messages in the chat
+function displayMessage(message, isUser = false) {
+  const messageDiv = document.createElement('div');
+  messageDiv.textContent = message;
+  if (isUser) {
+    messageDiv.style.textAlign = 'right'; // User messages aligned to the right
+  }
+  chatOutput.appendChild(messageDiv);
+  chatOutput.scrollTop = chatOutput.scrollHeight; // Scroll to the bottom
+}
+
+// 2) Handle user input and the conversation flow
+function handleResponse() {
+  const response = userResponse.value.trim();
+  displayMessage(response, true); // Display user response in chat (right-aligned)
+  userResponse.value = '';        // Clear the input field
+
+  // Switch on current step
+  if (step === 0) {
+    // Step 0: We asked for Name
+    userName = response;
+    step = 1;
+    displayMessage("Now, please enter your Email Address:");
+  }
+  else if (step === 1) {
+    // Step 1: We asked for Email
+    userEmail = response;
+    // Check if this user already claimed a reward (via localStorage)
+    let existingReward = localStorage.getItem("userReward");
+    if (existingReward) {
+      // The user has already claimed a reward before
+      displayMessage("It looks like you've already claimed a reward previously!");
+      displayMessage("Your reward was: " + existingReward);
+      displayMessage("Thank you for visiting again!");
+      step = 999; // End the flow
+    } else {
+      // No existing reward, so proceed to ask if they'd like to leave a review
+      step = 2;
+      displayMessage("Would you like to leave an honest review to win a reward?");
+      displayMessage("Type 'Yes' or 'No'.");
+    }
+  }
+  else if (step === 2) {
+    // Step 2: Ask if they want to review
+    if (response.toLowerCase() === 'yes') {
+      step = 3;
+      displayMessage("Great! Would you like to leave your review on Google or Facebook?");
+    } 
+    else if (response.toLowerCase() === 'no') {
+      step = 999;
+      displayMessage("No worries! Thank you for your time. We hope to serve you again soon!");
+    } 
+    else {
+      displayMessage("Please answer 'Yes' or 'No'.");
+    }
+  }
+  else if (step === 3) {
+    // Step 3: Ask which platform
+    if (response.toLowerCase() === 'google') {
+      step = 4;
+      displayMessage("Awesome! Please leave your review on Google, then upload a screenshot.");
+      // Example: open Google in new tab
+      window.open("https://www.google.com/search?q=green+chilli+bangor+reviews", "_blank");
+      // Show the screenshot form
+      userInfoForm.classList.remove('hidden');
+    }
+    else if (response.toLowerCase() === 'facebook') {
+      step = 4;
+      displayMessage("Awesome! Please leave your review on Facebook, then upload a screenshot.");
+      // Example: open Facebook in new tab
+      window.open("https://www.facebook.com/greenchillibangor/reviews/", "_blank");
+      // Show the screenshot form
+      userInfoForm.classList.remove('hidden');
+    }
+    else {
+      displayMessage("Please answer 'Google' or 'Facebook'.");
+    }
+  }
+  else if (step === 4) {
+    // Step 4: Wait for user to confirm they've uploaded screenshot
+    // In practice, you'd hide the text box if you're using a <form> for screenshots
+    displayMessage("Please upload your screenshot using the form above.");
+    displayMessage("Type 'Done' once you've uploaded.");
+  }
+  else if (step === 5) {
+    // Step 5: Spinning wheel logic
+    if (response.toLowerCase() === 'spin') {
+      spinTheWheel();
+    } else {
+      displayMessage("Please type 'spin' to spin the wheel!");
+    }
+  }
+  else if (step === 999) {
+    // The conversation ended
+    displayMessage("Thank you and have a nice day!");
+  }
+}
+
+// Call startChat() when the page loads
+startChat();
+
+/* =============== SCREENSHOT UPLOAD + SPINNING WHEEL =============== */
+
+// Suppose your screenshot <form> calls this function once a file is chosen
+function handleScreenshotUpload(fileInput) {
+  if (fileInput.files.length > 0) {
+    screenshotFile = fileInput.files[0];
+    displayMessage("Screenshot uploaded: " + screenshotFile.name, true);
+    
+    // Hide the form now that user has uploaded
+    userInfoForm.classList.add('hidden');
+    // Next, ask user to type 'spin' to spin the wheel
+    displayMessage("Type 'spin' to spin the wheel for your reward!");
+    step = 5;
+  }
+}
+
+// Very simple spinning wheel logic
+function spinTheWheel() {
+  step = 999; // No more typed steps after this
+  displayMessage("Spinning the wheel...");
+
+  // Simulate a 2-second spin, then reveal a random reward
+  setTimeout(() => {
+    let rewards = ["Chips", "Naan Bread", "Onion Bhaji", "Chicken Pakora"];
+    let chosenReward = rewards[Math.floor(Math.random() * rewards.length)];
+
+    // Save the chosenReward so user doesn't get another if they come back
+    localStorage.setItem("userReward", chosenReward);
+
+    displayMessage("CONGRATULATIONS! You have won: " + chosenReward);
+    displayMessage("We've emailed your voucher. Thank you for your review and enjoy your reward!");
+
+    // Example: send data to your backend or Google Script
+    uploadReviewData(chosenReward);
+  }, 2000);
+}
+
+// Example function to send name, email, screenshot, reward to your backend
+function uploadReviewData(chosenReward) {
+  if (!screenshotFile) return;
+
+  let reader = new FileReader();
+  reader.onload = async function() {
+    let base64String = reader.result.split(",")[1];
+
+    const formData = new URLSearchParams();
+    formData.append("name", userName);
+    formData.append("email", userEmail);
+    formData.append("reward", chosenReward);
+    formData.append("image", base64String);
+    formData.append("filename", screenshotFile.name);
+    formData.append("mimeType", screenshotFile.type);
+
+    // Example fetch call (replace URL with your actual endpoint)
+    try {
+      let response = await fetch(
+        "https://script.google.com/macros/s/ABCDE12345/exec",
+        { method: "POST", body: formData }
+      );
+      let result = await response.json();
+      if (!result.success) {
+        console.error("Upload error:", result.error);
+      }
+    } catch (err) {
+      console.error("Error sending data:", err);
+    }
+  };
+  reader.readAsDataURL(screenshotFile);
+}
