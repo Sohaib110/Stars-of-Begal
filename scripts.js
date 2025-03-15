@@ -239,15 +239,15 @@ function askForEmail(providedName) {
  * Once we have name & email, check if user already claimed a reward
  * If yes, skip the review flow. If no, proceed to ask "Google or Facebook".
  */
+
 function checkExistingReward(providedEmail) {
-  sessionStorage.setItem("userEmail", providedEmail);
+  localStorage.setItem("userEmail", providedEmail);
 
   let projectName = "bengal"; // Unique project identifier
-  let claimed = localStorage.getItem(projectName + "_userReward");
+  let claimedEmail = localStorage.getItem(projectName + "_userEmail");
 
-  if (claimed) {
+  if (claimedEmail === providedEmail) {
     addMessage("It looks like you've already claimed a reward previously!", "bot");
-    addMessage("Your reward was: " + claimed, "bot");
     addMessage("Thank you for visiting again!", "bot");
     return;
   }
@@ -256,10 +256,43 @@ function checkExistingReward(providedEmail) {
   askReviewPlatform();
 }
 
+function claimReward(providedEmail) {
+  let projectName = "bengal"; // Unique project identifier
+  let normalizedEmail = providedEmail.trim().toLowerCase(); // Normalize email
+  let currentTime = Date.now(); // Current timestamp in milliseconds
+  let thirtyDays = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+
+  let claimedData = JSON.parse(localStorage.getItem(projectName + "_claimedData")) || {};
+
+  if (claimedData[normalizedEmail]) {
+    let lastClaimTime = claimedData[normalizedEmail];
+
+    if (currentTime - lastClaimTime < thirtyDays) {
+      let remainingDays = Math.ceil((thirtyDays - (currentTime - lastClaimTime)) / (1000 * 60 * 60 * 24));
+      addMessage(`You have already claimed your reward. Try again in ${remainingDays} days.`, "bot");
+      return;
+    }
+  }
+
+  // Update claim time and allow claiming
+  claimedData[normalizedEmail] = currentTime;
+  localStorage.setItem(projectName + "_claimedData", JSON.stringify(claimedData));
+
+  addMessage("Congratulations! You've claimed your reward!", "bot");
+}
+
+// Example usage
+function askReviewPlatform() {
+  // Logic to ask for a review
+  // Once the review is completed, call claimReward
+  let providedEmail = localStorage.getItem("userEmail");
+  claimReward(providedEmail);
+}
+
 // Function to store the reward for "Bengal"
 function storeReward(reward) {
   let projectName = "bengal"; // Ensure this matches checkExistingReward
-  localStorage.setItem(projectName + "_userReward", reward);
+  localStorage.setItem(projectName + "_email", providedEmail);
 }
 
 
