@@ -280,7 +280,7 @@ function checkExistingReward(providedEmail) {
 
       // Show message about waiting and stop the flow
       addMessage(
-        `⏳ You have already claimed a reward. Please try again in ${remainingDays} days.`,
+       "You have already claimed a reward. Please check your previous email from us to see when you're eligible to play again",
         "bot"
       );
 
@@ -321,7 +321,7 @@ function claimReward() {
   );
 
   // Continue with reward process
-  addMessage("🎉 Congratulations! You've claimed your reward!", "bot");
+  addMessage("🎉 Congratulations!  Remember to check your  email/spam within the next 12 hours.", "bot");
 }
 function askReviewPlatform() {
   // Logic to ask for a review
@@ -473,7 +473,7 @@ function giveReward(wheelContainer, wheel) {
   wheel.style.animation = "none";
 
   // Randomly pick a reward
-  let rewards = ["Chips", "Naan Bread", "Onion Bhaji", "Chicken Pakora"];
+  let rewards = ["Saag Alo or Veg Curry or Saag Bhaji\n 10% off your next order", "Naan Bread\n 10% off your next order", "Onion Bhaji\n 10% off your next order", "Chicken or Veg Pakora\n 10% off your next order"];
   let chosenReward = rewards[Math.floor(Math.random() * rewards.length)];
   reward = chosenReward;
 
