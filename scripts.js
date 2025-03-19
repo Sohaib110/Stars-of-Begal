@@ -473,7 +473,7 @@ function giveReward(wheelContainer, wheel) {
   wheel.style.animation = "none";
 
   // Randomly pick a reward
-  let rewards = ["Saag Alo or Veg Curry or Saag Bhaji\n 10% off your next order", "Naan Bread\n 10% off your next order", "Onion Bhaji\n 10% off your next order", "Chicken or Veg Pakora\n 10% off your next order"];
+  let rewards = ["Saag Alo or Veg Curry or Saag Bhaji", "Naan Bread", "Onion Bhaji", "Chicken or Veg Pakora"];
   let chosenReward = rewards[Math.floor(Math.random() * rewards.length)];
   reward = chosenReward;
 
